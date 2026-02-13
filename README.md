@@ -188,6 +188,15 @@ QuizzApp/
 - **Session** - Active quiz sessions with codes
 - **Response** - Participant submissions with answers
 
+## Tutorial PDF
+
+A PDF version of the Tutorial.md is automatically generated via GitHub Actions whenever the tutorial or screenshots are updated. You can:
+- Download it from the [GitHub Actions artifacts](../../actions/workflows/generate-tutorial-pdf.yml)
+- Find it in the latest release after merging to main
+- Manually trigger generation using the workflow dispatch option
+
+This makes it easy to share the tutorial offline or print it for events.
+
 ## License
 
 ISC License - See LICENSE file for details

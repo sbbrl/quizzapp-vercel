@@ -1,0 +1,68 @@
+name: Generate Tutorial PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Tutorial.md'
+      - 'public/tutorial-screenshots/**'
+  workflow_dispatch:
+
+jobs:
+  convert-to-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+
+      - name: Convert Tutorial.md to PDF
+        run: |
+          # Convert markdown to PDF with embedded images
+          pandoc Tutorial.md \
+            -o Tutorial.pdf \
+            --from markdown \
+            --to pdf \
+            --pdf-engine=pdflatex \
+            --variable geometry:margin=1in \
+            --variable colorlinks=true \
+            --variable linkcolor=blue \
+            --variable urlcolor=blue \
+            --variable toccolor=blue \
+            --toc \
+            --toc-depth=2 \
+            -V documentclass=article \
+            -V fontsize=11pt
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tutorial-pdf
+          path: Tutorial.pdf
+          retention-days: 90
+
+      - name: Create Release (on main branch only)
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Tutorial.pdf
+          tag_name: tutorial-pdf-${{ github.run_number }}
+          name: Tutorial PDF - ${{ github.run_number }}
+          body: |
+            Automatically generated PDF version of Tutorial.md
+
+            Generated from commit: ${{ github.sha }}
+            Triggered by: ${{ github.actor }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

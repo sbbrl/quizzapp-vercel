@@ -29,12 +29,18 @@ Welcome to QuizzApp! This tutorial will guide you through every step of using th
 4. **Click the "Login" button**
 5. Upon successful login, you'll be redirected to the **Admin Dashboard**
 
+![Admin Login Page](public/tutorial-screenshots/02-admin-login.png)
+*Screenshot: Admin login page with username and password fields*
+
 ### Admin Dashboard Overview
 
 After logging in, you'll see the main admin dashboard with three main options:
 - **📝 Manage Templates** - Create and view quiz templates
 - **🎯 Manage Sessions** - View and control active quiz sessions
 - **🚀 Start New Session** - Quickly start a new quiz session
+
+![Admin Dashboard](public/tutorial-screenshots/03-admin-dashboard.png)
+*Screenshot: Admin dashboard showing the three main options for managing templates, sessions, and starting new sessions*
 
 ---
 
@@ -48,6 +54,9 @@ Templates are reusable quiz structures that contain questions. You can use the s
 2. Click the **"+ Create New Template"** button (blue button on the right)
 3. You'll be taken to the **Create Template** page
 
+![Templates List](public/tutorial-screenshots/04-templates-list.png)
+*Screenshot: Templates list page showing the "Create New Template" button*
+
 ### Fill in Template Information
 
 1. **Template Name** (Required)
@@ -59,6 +68,9 @@ Templates are reusable quiz structures that contain questions. You can use the s
    - Add a brief description of what this quiz is about
    - This will be shown to participants before they start
    - Example: "Find out how compatible you are with your partner!"
+
+![Create Template Form](public/tutorial-screenshots/05-create-template-empty.png)
+*Screenshot: Empty create template form showing template name and description fields*
 
 ---
 
@@ -132,6 +144,9 @@ QuizzApp supports **three types of questions**. You can mix and match these type
 3. You'll be redirected to the **Templates** page
 4. Your new template will appear in the list
 
+![Template with Questions](public/tutorial-screenshots/06-create-template-filled.png)
+*Screenshot: Template form filled with sample questions showing all three question types (Text, Radio, and Dropdown)*
+
 ### Viewing a Template
 
 1. From the **Templates** page, find your template
@@ -142,6 +157,9 @@ QuizzApp supports **three types of questions**. You can mix and match these type
    - Number of sessions using this template
    - All questions with their types and options
 4. From here, you can also click **"🚀 Start Session with this Template"**
+
+![Template View](public/tutorial-screenshots/08-template-view.png)
+*Screenshot: Template view showing all questions with their types and options*
 
 ---
 
@@ -190,6 +208,9 @@ A **session** is a live instance of a quiz that participants can join. Each sess
 5. Click **"🚀 Start Session"** (green button)
 6. You'll be taken to the **Session Details** page
 
+![Start Session Page](public/tutorial-screenshots/09-start-session.png)
+*Screenshot: Start session page showing template selection, time limit, and scheduled unlock time options*
+
 ---
 
 ## 5. Managing Sessions
@@ -206,6 +227,9 @@ A **session** is a live instance of a quiz that participants can join. Each sess
 
 3. Click **"View Details"** on any session to manage it
 
+![Manage Sessions](public/tutorial-screenshots/11-manage-sessions.png)
+*Screenshot: Sessions list page showing all active quiz sessions with their codes and status*
+
 ### Session Details Page
 
 When you open a session, you'll see:
@@ -221,6 +245,9 @@ When you open a session, you'll see:
 - **🔓 Unlock Session:** Allow participants to take the quiz
 - **🔒 Lock Session:** Prevent new submissions
 - **✓ Mark as Completed:** Archive the session
+
+![Session Details](public/tutorial-screenshots/10-session-details.png)
+*Screenshot: Session details page showing join code, status, controls, and participant responses*
 
 ### Sharing the Quiz with Participants
 
@@ -284,6 +311,9 @@ Look at the **"Quick Stats"** box on the right side:
 - **Total Participants:** How many people completed the quiz
 - **Avg Time:** Average time spent by participants
 
+![Results View](public/tutorial-screenshots/16-results-view.png)
+*Screenshot: Session details page with participant responses showing answers to all questions*
+
 ### Exporting Results
 
 Currently, results are displayed on the screen. To save them:
@@ -312,6 +342,9 @@ Participants can join in two ways:
 2. Enter the 4-character code
 3. Click "Join Quiz"
 
+![Join Page](public/tutorial-screenshots/12-participant-join.png)
+*Screenshot: Participant join page where users enter the 4-character session code*
+
 **Method B: Using the Direct Link**
 1. Click the link you shared
 2. Goes directly to the quiz
@@ -328,6 +361,9 @@ They also see:
 - Number of questions
 - Time limit (if any)
 - How many questions are required
+
+![Participant Information](public/tutorial-screenshots/13-participant-info.png)
+*Screenshot: Participant information page showing name, email, and phone fields, along with quiz details*
 
 ### Step 3: Starting the Quiz
 
@@ -350,12 +386,18 @@ They also see:
 - Marked with a red asterisk (*)
 - Must be answered before submitting
 
+![Quiz Taking](public/tutorial-screenshots/14-quiz-taking.png)
+*Screenshot: Quiz interface showing all three question types with a countdown timer at the top*
+
 ### Step 5: Submitting
 
 1. After answering all questions, click **"Submit Quiz ✓"**
 2. System checks that all required questions are answered
 3. If any required questions are missing, an alert appears
 4. Upon successful submission, they see a "Thank You" page
+
+![Quiz Submitted](public/tutorial-screenshots/15-quiz-submitted.png)
+*Screenshot: Success page shown to participants after quiz submission*
 
 ### If Time Runs Out
 
