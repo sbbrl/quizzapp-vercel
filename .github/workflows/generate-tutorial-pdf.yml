@@ -12,6 +12,8 @@ on:
 jobs:
   convert-to-pdf:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -22,59 +24,52 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Pandoc
+      - name: Install Pandoc and dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
 
-      - name: Preprocess Tutorial.md (remove emojis for LaTeX)
+      - name: Preprocess Tutorial.md (remove ALL emojis and variation selectors)
         run: |
-          # Create a temporary file with emojis removed for LaTeX compatibility
-          # LaTeX (pdflatex) doesn't support Unicode emojis by default
           python3 << 'EOF'
-          import sys
           import re
           
-          # Read the original Tutorial.md
           with open('Tutorial.md', 'r', encoding='utf-8') as f:
               content = f.read()
           
-          # Remove emojis using comprehensive Unicode ranges
-          # This regex matches most common emojis including:
-          # 📝🎯🚀🔓🔒✓💾🗑️📋🎉 etc.
+          # Remove emojis AND variation selectors (the invisible U+FE0F characters)
           emoji_pattern = re.compile(
               "["
-              "\U0001F300-\U0001F9FF"  # Most emoticons, symbols, pictographs
-              "\U00002600-\U000027BF"  # Miscellaneous Symbols
+              "\U0001F300-\U0001F9FF"  # Emoticons
+              "\U00002600-\U000027BF"  # Misc symbols
               "\U00002700-\U000027BF"  # Dingbats
-              "\U0001FA00-\U0001FAFF"  # Chess & Extended Pictographs
+              "\U0001FA00-\U0001FAFF"  # Extended pictographs
               "\U00002190-\U000021FF"  # Arrows
+              "\U0000FE00-\U0000FE0F"  # Variation selectors (THIS IS THE FIX!)
+              "\U0001F000-\U0001F02F"  # Mahjong tiles
+              "\U0001F0A0-\U0001F0FF"  # Playing cards
+              "\U00002300-\U000023FF"  # Misc technical
+              "\U0000200D"              # Zero-width joiner
               "]+",
               flags=re.UNICODE
           )
           
-          # Remove emojis from the content
           content_no_emojis = emoji_pattern.sub('', content)
           
-          # Write to output file (using explicit file writing for better error handling)
           with open('Tutorial-processed.md', 'w', encoding='utf-8') as out:
               out.write(content_no_emojis)
           EOF
 
       - name: Convert Tutorial.md to PDF
         run: |
-          # Convert markdown to PDF with embedded images
-          # Using the preprocessed file without emojis
           pandoc Tutorial-processed.md \
             -o Tutorial.pdf \
             --from markdown \
-            --to pdf \
             --pdf-engine=pdflatex \
             --variable geometry:margin=1in \
             --variable colorlinks=true \
             --variable linkcolor=blue \
             --variable urlcolor=blue \
-            --variable toccolor=blue \
             --toc \
             --toc-depth=2 \
             -V documentclass=article \
@@ -87,17 +82,10 @@ jobs:
           path: Tutorial.pdf
           retention-days: 90
 
-      - name: Create Release (on main branch only)
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: Tutorial.pdf
-          tag_name: tutorial-pdf-${{ github.run_number }}
-          name: Tutorial PDF - ${{ github.run_number }}
-          body: |
-            Automatically generated PDF version of Tutorial.md
-
-            Generated from commit: ${{ github.sha }}
-            Triggered by: ${{ github.actor }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit PDF to repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -f Tutorial.pdf
+          git commit -m "Auto-generate Tutorial PDF [skip ci]" || echo "No changes to commit"
+          git push
