@@ -60,6 +60,7 @@ model Response {
   session       Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   participantName String
   participantEmail String?
+  participantPhone String?
   answers       String   // JSON string of answers
   submittedAt   DateTime @default(now())
   timeSpent     Int?     // Time spent in seconds
