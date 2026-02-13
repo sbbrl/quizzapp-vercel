@@ -9,3 +9,6 @@ dist
 build
 *.tsbuildinfo
 .eslintrc.json
+
+# Generated PDF
+Tutorial.pdf
