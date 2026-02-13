@@ -32,6 +32,7 @@ export default function QuizPage() {
   const [loading, setLoading] = useState(true);
   const [participantName, setParticipantName] = useState("");
   const [participantEmail, setParticipantEmail] = useState("");
+  const [participantPhone, setParticipantPhone] = useState("");
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [started, setStarted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -85,6 +86,7 @@ export default function QuizPage() {
           sessionId: quizData?.id,
           participantName,
           participantEmail: participantEmail || null,
+          participantPhone: participantPhone || null,
           answers,
           timeSpent,
         }),
@@ -154,6 +156,7 @@ export default function QuizPage() {
           sessionId: quizData?.id,
           participantName,
           participantEmail: participantEmail || null,
+          participantPhone: participantPhone || null,
           answers,
           timeSpent,
         }),
@@ -297,6 +300,19 @@ export default function QuizPage() {
                 onChange={(e) => setParticipantEmail(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-900"
                 placeholder="your@email.com"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Phone Number (Optional)
+              </label>
+              <input
+                type="tel"
+                value={participantPhone}
+                onChange={(e) => setParticipantPhone(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-900"
+                placeholder="+1234567890"
               />
             </div>
           </div>
